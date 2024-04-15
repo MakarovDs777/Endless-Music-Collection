@@ -10,7 +10,7 @@ def rearrange_code(source_code):
     
     # Заменяем старые методы на перемешанные
     rearranged_code = re.sub(r'def.*?:', lambda _: methods.pop(0), source_code, count=len(methods))
-    
+    """
     # Находим все переменные результатов и их значения
     results = re.findall(r'(\bresult\d+\b)\s*=\s*.+', rearranged_code)
     
@@ -24,7 +24,7 @@ def rearrange_code(source_code):
           # Перемешиваем порядок переменных результатов в вызове print
     print_arguments = ', '.join(results)
     rearranged_code = re.sub(r'print\(.+\)', f'print({print_arguments})', rearranged_code)
-    
+    """
     return rearranged_code
 
 source_code = """
