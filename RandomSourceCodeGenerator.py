@@ -10,18 +10,21 @@ def rearrange_code(source_code):
     
     # Заменяем старые методы на перемешанные
     rearranged_code = re.sub(r'def.*?:', lambda _: methods.pop(0), source_code, count=len(methods))
-    """
-    # Находим все переменные result и их значения
-    results = re.findall(r'result\d+\s*=\s*.+', rearranged_code)
+    
+    # Находим все переменные результатов и их значения
+    results = re.findall(r'(\bresult\d+\b)\s*=\s*.+', rearranged_code)
     
     # Перемешиваем переменные результатов и их порядок в вызове print
     random.shuffle(results)
     
     # Заменяем старые переменные результатов на перемешанные
     for i, result in enumerate(results):
-        rearranged_code = re.sub(r'result\d+\s*=\s*.+', result, rearranged_code, count=1)
-        rearranged_code = re.sub(r'print\(.+\)', 'print(' + ', '.join([f'result{i+1}' for i in range(len(results))]) + ')', rearranged_code)
-    """
+        rearranged_code = re.sub(r'\bresult\d+\b\s*=\s*.+', result, rearranged_code, count=1)
+    
+          # Перемешиваем порядок переменных результатов в вызове print
+    print_arguments = ', '.join(results)
+    rearranged_code = re.sub(r'print\(.+\)', f'print({print_arguments})', rearranged_code)
+    
     return rearranged_code
 
 source_code = """
